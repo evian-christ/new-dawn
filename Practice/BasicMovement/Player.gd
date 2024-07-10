@@ -3,13 +3,10 @@ extends Node2D
 const SPEED = 200
 var velocity = Vector2.ZERO
 
-func _ready():
-	connect("body_entered", self, "_on_area_2d_body_entered")
-
 func _process(delta):
 	handle_movement(delta)
 
-func handle_movement(delta):
+func handle_movement(_delta):
 	
 	if Input.is_action_pressed("ui_right"):
 		velocity.x += 1
@@ -22,8 +19,6 @@ func handle_movement(delta):
 		
 	if velocity.length() > 0:
 		velocity = velocity.normalized() * SPEED
-		
-	move_and_slide(velocity)
 
 func _on_area_2d_body_entered(body):
 	if body.is_in_group("walls"):

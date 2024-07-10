@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://jd0fmklel4w6"]
+[gd_scene load_steps=7 format=3 uid="uid://jd0fmklel4w6"]
 
 [ext_resource type="Script" path="res://Player.gd" id="1_awuqa"]
+[ext_resource type="Script" path="res://Conrol.gd" id="1_e2wwd"]
 [ext_resource type="Texture2D" uid="uid://bs2br4fn86lov" path="res://src/dcba6f5e-f8f7-42eb-90ae-69af4cd55e65.png" id="2_dc1fm"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8xn17"]
@@ -12,28 +13,36 @@ height = 128.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l4u7x"]
 size = Vector2(177, 69)
 
-[node name="MainScene" type="Node2D"]
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+script = ExtResource("1_e2wwd")
 
-[node name="Player" type="Node2D" parent="."]
+[node name="MainScene" type="Node2D" parent="."]
+position = Vector2(514, 229)
+
+[node name="Player" type="Node2D" parent="MainScene"]
 script = ExtResource("1_awuqa")
 
-[node name="Sprite2D" type="Sprite2D" parent="Player"]
+[node name="Sprite2D" type="Sprite2D" parent="MainScene/Player"]
 position = Vector2(171, 155)
 texture = ExtResource("2_dc1fm")
 
-[node name="Area2D" type="Area2D" parent="Player"]
+[node name="Area2D" type="Area2D" parent="MainScene/Player"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainScene/Player/Area2D"]
 position = Vector2(171, 156)
 shape = SubResource("CapsuleShape2D_8xn17")
 
-[node name="Wall" type="Node2D" parent="."]
+[node name="Wall" type="Node2D" parent="MainScene"]
 
-[node name="Sprite2D" type="Sprite2D" parent="Wall"]
+[node name="Sprite2D" type="Sprite2D" parent="MainScene/Wall"]
 scale = Vector2(177, 69)
 texture = SubResource("CanvasTexture_mnnpp")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainScene/Wall"]
 shape = SubResource("RectangleShape2D_l4u7x")
 
-[connection signal="body_entered" from="Player/Area2D" to="Player" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="MainScene/Player/Area2D" to="MainScene/Player" method="_on_area_2d_body_entered"]
